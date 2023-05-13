@@ -48,7 +48,7 @@ const EpisodeList = (props) => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {props.episodeList.results.map((location, index) =>
+                            {props.episode.map((location, index) =>
                                 <StyledTableRow key={`location-card-${index}`}>
                                     <StyledTableCell align="center">{location.id}</StyledTableCell>
                                     <StyledTableCell align="center">{location.name}</StyledTableCell>

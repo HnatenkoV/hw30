@@ -13,6 +13,9 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import { styled } from '@mui/material/styles';
 import {useNavigate} from "react-router-dom";
 import TablePagination from "@mui/material/TablePagination";
+import TableHeader from './tableHeader'
+import {useSelector} from "react-redux";
+
 
 
 const HeroList = (props) => {
@@ -20,7 +23,6 @@ const HeroList = (props) => {
     const navigate = useNavigate()
     const showInfo = (index) => {
         navigate(`hero/${index}`)
-        console.log(index)
     }
 
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -43,42 +45,53 @@ const HeroList = (props) => {
     }));
 
 
-    return (
-        <>
-            <Box sx={{ width: 1050, margin: 'auto' }}>
-                <TableContainer sx={{ }} component={Paper}>
-                    <Table  aria-label="simple table">
-                        <TableHead>
-                            <TableRow>
-                                <TableCell align="center">Id</TableCell>
-                                <TableCell align="center">Name</TableCell>
-                                <TableCell align="center">Status</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {props.heroList.results.map((hero, index) =>
-                                <StyledTableRow key={`hero-row-${index}`} onClick={() => showInfo(hero.id)}>
-                                    <StyledTableCell align="center">{hero.id}</StyledTableCell>
-                                    <StyledTableCell align="center">{hero.name}</StyledTableCell>
-                                    <StyledTableCell align="center">{hero.status}</StyledTableCell>
-                                </StyledTableRow>
-                            )}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <TablePagination sx={{ }}
-                                 rowsPerPageOptions={[1]}
-                                 component={"div"}
-                                 count={props.count}
-                                 rowsPerPage={props.rowsPerPage}
-                                 page={props.page}
-                                 onPageChange={props.onPageChange}
-                                 onRowsPerPageChange={props.onRowsPerPageChange}
-                />
+    return <>
+        <Box sx={{ width: 1050, margin: 'auto' }}>
+            <TableContainer sx={{ }} component={Paper}>
+                <Table  aria-label="simple table">
+                    <TableHeader/>
+                    <TableBody>
+                        {props.heroes.map((hero, index) =>
+                            <StyledTableRow key={`hero-row-${index}`} onClick={() => showInfo(hero.id)}>
+                                <StyledTableCell align="center">{hero.id}</StyledTableCell>
+                                <StyledTableCell align="center">{hero.name}</StyledTableCell>
+                                <StyledTableCell align="center">{hero.status}</StyledTableCell>
+                            </StyledTableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <TablePagination sx={{ }}
+                             rowsPerPageOptions={[1]}
+                             component={"div"}
+                             count={props.count}
+                             rowsPerPage={props.rowsPerPage}
+                             page={props.page}
+                             onPageChange={props.onPageChange}
+                             onRowsPerPageChange={props.onRowsPerPageChange}
+            />
 
-            </Box>
-        </>
-    )
+        </Box>
+
+    </>;
+
+    // return (
+    //     <>
+    //         <Box sx={{ width: 1050, margin: 'auto' }}>
+    //
+    //             <TablePagination sx={{ }}
+    //                              rowsPerPageOptions={[1]}
+    //                              component={"div"}
+    //                              count={props.count}
+    //                              rowsPerPage={props.rowsPerPage}
+    //                              page={props.page}
+    //                              onPageChange={props.onPageChange}
+    //                              onRowsPerPageChange={props.onRowsPerPageChange}
+    //             />
+    //
+    //         </Box>
+    //     </>
+    // )
 }
 
 

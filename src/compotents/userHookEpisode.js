@@ -1,15 +1,18 @@
-import React from "react";
+import React, {useEffect} from "react";
 import EpisodeList from "./episodeList";
-import TablePagination from "@mui/material/TablePagination";
-import useFetchHeroes from "../hooks/useFetchHeroes";
+import {useDispatch, useSelector} from "react-redux";
+import {getEpisodeAsync} from "../store/slices/rickAndMorty";
+import {Box} from "@mui/material";
+import CircularColor from "./circular";
+import TableSkeleton from "./tableSkeleton";
 
 
 const UserHookEpisode = () => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(20);
-    const {data, loading, error} = useFetchHeroes(
-        `episode/?page=${page * rowsPerPage / 20 + 1}`
-    );
+    // const {data, loading, error} = useFetchHeroes(
+    //     `episode/?page=${page * rowsPerPage / 20 + 1}`
+    // );
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -20,16 +23,29 @@ const UserHookEpisode = () => {
         setPage(0);
     };
 
-    if (error) {
-        return <h1 style={{color: "red"}}> === Error ===</h1>
-    }
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(getEpisodeAsync(page * rowsPerPage / 20 + 1))
+    }, [dispatch, page])
+
+    const episode = useSelector((state) => state.rickmorty.listOfEpisode);
+    const isLoading = useSelector((state) => state.rickmorty.isLoading)
+    const episodeInfo = useSelector((state) => state.rickmorty.episodeInfo)
+
+    const isFirstLoading = () => !episode.length && isLoading;
+    if (isFirstLoading()) return (
+        <Box >
+            <CircularColor/>
+        </Box>
+    )
 
     return <>
         <>
-        {loading ? <p>Loading...</p> : <EpisodeList episodeList={data}
+            {isLoading ? <TableSkeleton /> : <EpisodeList episode={episode}
                                                     rowsPerPageOptions={[1]}
                                                     component={"div"}
-                                                    count={data?.info?.count}
+                                                    count={episodeInfo?.info?.count}
                                                     rowsPerPage={rowsPerPage}
                                                     page={page}
                                                     onPageChange={handleChangePage}

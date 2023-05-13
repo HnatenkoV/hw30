@@ -4,9 +4,14 @@ import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import { Link } from 'react-router-dom';
 import "../css/css-material-ui/material-ui.css"
+import {useDispatch} from "react-redux";
+import {getCharacterAsync} from "../store/slices/rickAndMorty"
 
 export default function SimpleBottomNavigation() {
     const [value, setValue] = React.useState(0);
+
+    const fetchHeroesList = () => dispatch(getCharacterAsync());
+    const dispatch = useDispatch();
 
     return (
         <Box mb={2} sx={{ width: "100%"}}>
@@ -18,7 +23,7 @@ export default function SimpleBottomNavigation() {
                 }}
             >
                 <BottomNavigationAction label="Home" component={Link} to="/"/>
-                <BottomNavigationAction label="Heroes" component={Link} to="/heroes" />
+                <BottomNavigationAction onClick={fetchHeroesList} label="Heroes" component={Link} to="/heroes" />
                 <BottomNavigationAction label="Episode" component={Link} to="/episodes" />
             </BottomNavigation>
         </Box>
