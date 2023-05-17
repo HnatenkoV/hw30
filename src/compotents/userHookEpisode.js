@@ -42,7 +42,7 @@ const UserHookEpisode = () => {
 
     return <>
         <>
-            {isLoading ? <TableSkeleton /> : <EpisodeList episode={episode}
+            {isLoading ? <TableSkeleton rowsPerPage={rowsPerPage} /> : <EpisodeList episode={episode}
                                                     rowsPerPageOptions={[1]}
                                                     component={"div"}
                                                     count={episodeInfo?.info?.count}

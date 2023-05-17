@@ -8,6 +8,7 @@ import {getCharacterAsync} from "../store/slices/rickAndMorty";
 import TableSkeleton from "./tableSkeleton";
 import CircularColor from "./circular";
 import {Box} from "@mui/material";
+import TableBody from "@mui/material/TableBody";
 
 
 const UserHookHeroes = () => {
@@ -47,7 +48,7 @@ const UserHookHeroes = () => {
     return <>
         <Outlet/>
         <div>
-            {isLoading ? <TableSkeleton /> : <HeroList heroes={heroes}
+            {isLoading ? <TableSkeleton  rowsPerPage={rowsPerPage} /> : <HeroList heroes={heroes}
                                                  rowsPerPageOptions={[1]}
                                                  component={"div"}
                                                  count={heroesInfo?.info?.count}
